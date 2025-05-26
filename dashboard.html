@@ -1,0 +1,119 @@
+<!-- Search input -->
+<div style="margin: 20px 0; text-align:center;">
+    <input type="text" id="searchInput" placeholder="Search by customer name..." style="padding: 10px; width: 80%; max-width: 400px;">
+  </div>
+  
+  <!-- Table -->
+  <table id="data-table" border="1" style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr style="background-color: #007BFF; color: white;">
+        <th>Customer Name</th>
+        <th>Previous Amount</th>
+        <th>Cash</th>
+        <th>Momo Pay</th>
+        <th>Current Amount</th>
+        <th>Cost Amount</th>
+        <th>Balance</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <!-- Dynamic data -->
+    </tbody>
+  </table>
+  
+  <!-- Pagination controls -->
+  <div id="pagination" style="margin-top: 20px; text-align:center;"></div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyC0reEik7-SZRFQkLhK-TSs-W3hEXaSOzs",
+      authDomain: "zablikanisms.firebaseapp.com",
+      projectId: "zablikanisms",
+      storageBucket: "zablikanisms.firebasestorage.app",
+      messagingSenderId: "773613868831",
+      appId: "1:773613868831:web:7d5ce8b0210fe0fe11422a"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+  
+    let allData = [];
+    let filteredData = [];
+    let currentPage = 1;
+    const rowsPerPage = 5;
+  
+    const tableBody = document.getElementById("table-body");
+    const paginationDiv = document.getElementById("pagination");
+    const searchInput = document.getElementById("searchInput");
+  
+    // Load all data once
+    async function loadCustomerData() {
+      const querySnapshot = await getDocs(collection(db, "customerDetails"));
+      allData = querySnapshot.docs.map(doc => doc.data());
+      filteredData = allData;
+      renderTable();
+      renderPagination();
+    }
+  
+    function renderTable() {
+      const start = (currentPage - 1) * rowsPerPage;
+      const paginatedData = filteredData.slice(start, start + rowsPerPage);
+  
+      tableBody.innerHTML = "";
+      paginatedData.forEach(data => {
+        const row = `
+          <tr>
+            <td>${data.Cname || ''}</td>
+            <td>${data.previous || ''}</td>
+            <td>${data.cash || ''}</td>
+            <td>${data.momopay || ''}</td>
+            <td>${data.currentamt || ''}</td>
+            <td>${data.costamt || ''}</td>
+            <td>${data.balance || ''}</td>
+            <td>${new Date(data.date).toLocaleString()}</td>
+          </tr>
+        `;
+        tableBody.innerHTML += row;
+      });
+    }
+  
+    function renderPagination() {
+      const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+      paginationDiv.innerHTML = "";
+  
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        btn.style.margin = "0 5px";
+        btn.style.padding = "5px 10px";
+        btn.style.background = (i === currentPage) ? "#007BFF" : "#ccc";
+        btn.style.color = (i === currentPage) ? "#fff" : "#000";
+        btn.style.border = "none";
+        btn.style.borderRadius = "5px";
+        btn.style.cursor = "pointer";
+  
+        btn.addEventListener("click", () => {
+          currentPage = i;
+          renderTable();
+          renderPagination();
+        });
+  
+        paginationDiv.appendChild(btn);
+      }
+    }
+  
+    // Filter data on search
+    searchInput.addEventListener("input", () => {
+      const term = searchInput.value.toLowerCase();
+      filteredData = allData.filter(d => d.Cname?.toLowerCase().includes(term));
+      currentPage = 1;
+      renderTable();
+      renderPagination();
+    });
+  
+    window.addEventListener("DOMContentLoaded", loadCustomerData);
+  </script>
+  

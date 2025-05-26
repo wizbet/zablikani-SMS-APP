@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+  <title>Customer Payment Form</title>
+
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>zablikani SMS Entry Form</h2>
+    <form id="clearFrom">
+        
+      <div class="form-group">
+        Customer Name:
+        <select id="Cname"  required>
+          <option value="">--Select Customer--</option>
+          <option value="SUALE  ABASS">SUALE  ABASS</option>
+          <option value="YAMBU PURE">YAMBU PURE</option>
+          <option value="JUSTICE PURE">JUSTICE PURE</option>
+          <option value="KONYURISUNG">KONYURISUNG</option>
+          <option value="MA-UMRAHA">MA-UMRAHA</option>
+          <option value="MILES PURE">MILES PURE</option>
+          <option value="EDEN ICE">EDEN ICE</option>
+          <option value="MAIGA  PURE W.">MAIGA  PURE W.</option>
+          <option value="MARVLYN">MARVLYN</option>
+          <option value="A PLUS PURE">A PLUS PURE</option>
+          <option value="PREMIUM">PREMIUM</option>
+          <option value="DIPALIYA  PURE">DIPALIYA  PURE</option>
+          <option value="ELITE PURE">ELITE PURE</option>
+          <option value="AYRA PURIFIED">AYRA PURIFIED</option>
+          <option value="NAATI PURE">NAATI PURE</option>
+          <option value="BLUE SPRING">BLUE SPRING</option>
+          <option value="GOOD WATER">GOOD WATER</option>
+          <option value="MUBA UNIQUE">MUBA UNIQUE</option>
+          <option value="VAL ICE">VAL ICE</option>
+          <option value="AQUA-FINA">AQUA-FINA</option>
+          <option value="APPLE PAC">APPLE PAC</option>
+          <option value="ADAKWA PURE">ADAKWA PURE</option>
+          <option value="AB WATER">AB WATER</option>
+          <option value="QUA-QUA ICE">QUA-QUA ICE</option>
+          <option value="AL-AYN">AL-AYN</option>
+          <option value="HOLLAND PURE">HOLLAND PURE</option>
+          <option value="H A  FILTRING D.">H A  FILTRING D.</option>
+          <option value="RICH ICE">RICH ICE</option>
+          <option value="WUNI NTRA">WUNI NTRA</option>
+          
+
+        </select>
+      </div>
+
+      <div class="form-group">
+        Previous Amount:
+        <input type="text" id="Cprevious" >
+      </div>
+
+      <div class="form-group">
+        Cash:
+        <input type="text" id="Ccash" >
+      </div>
+
+      <div class="form-group">
+        Momo Pay:
+        <input type="text" id="Cmomopay" >
+      </div>
+
+      <div class="form-group">
+        Current Amount:
+        <input type="text" id="Ccurrent" >
+      </div>
+
+      <div class="form-group">
+        Cost Amount:
+        <input type="text" id="Ccost" >
+      </div>
+
+      <div class="form-group">
+        Balance:
+        <input type="text" id="Cbalance"  >
+      </div>
+      <input type="date" id="date">
+      <div class="form-group">
+        <span class="error" id="error-msg"></span>
+      </div>
+      
+      <button type="submit" class="submit-btn" id="submit">Submit</button>
+    </form>
+  </div>
+ 
+ 
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore-compat.js"></script>
+    <script src="./app.js"></script>
+
+
+</body>
+</html>
